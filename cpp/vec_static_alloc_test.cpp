@@ -3,6 +3,7 @@
 #include <iostream>
 #include <numeric>
 #include <cstddef>
+#include <iterator>
 
 //This program verifies that std::array is statically allocated within std::vector,
 //And is therefore fully contiguous.
@@ -23,7 +24,7 @@ int main() {
     std::vector<std::array<int, array_size>> vec(vec_size, ascending_array());
 
     //our pointer to the first element of the first array in the vector
-    int* ptr = &vec[0][0];
+    int* ptr = std::data(*vec.data());
 
     //we then loop though this vector with our pointer, outputting the value of the dereferenced pointer.
     //std::vector is guarenteed by the c++ standard to be contiguous
