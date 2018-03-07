@@ -27,8 +27,8 @@ template<typename T> void sieve_vec(std::vector<bool>& to_sieve, T sieve_with) {
 //iterates over the elements of a vec<bool>
 //if the element is true, then the index of this element is pushed onto a new vector,
 //	which is returned
-auto generate_elem_vec_from_bool_vec(std::vector<bool>& vec) {
-	std::vector<std::vector<bool>::size_type> elem_vec;
+template<typename T> std::vector<T> generate_elem_vec_from_bool_vec(std::vector<bool>& vec) {
+	std::vector<T> elem_vec;
 	auto bool_vec_size = vec.size();
 	for (auto i = 0; i != bool_vec_size; ++i) {
 		if (vec[i] == true) {
@@ -63,7 +63,7 @@ template<typename T> auto generate_primes(T limit) {
 		}
 	}
 
-	return generate_elem_vec_from_bool_vec(sieve);
+	return generate_elem_vec_from_bool_vec<T>(sieve);
 }
 
 //converts any object to a string, given that it has a
@@ -113,7 +113,7 @@ template<typename T> auto find_prime_factors(T to_factorize, std::vector<T>& pri
 int main()
 {
 	
-	const std::uint64_t max_num_to_factorize = 100000;
+	const std::uint64_t max_num_to_factorize = 1000000;
 	std::cout << "Finding prime factors of all numbers up to " << max_num_to_factorize << ".\n";
 
 	std::cout << "Generating prime list...";
@@ -135,6 +135,10 @@ int main()
 		s += "The prime factors of " + std::to_string(i) + " are " + vec_to_string(prime_factors) + "\n";
 	}
 	std::cout << s;
-	
+ /*
+	auto primes = generate_primes(100000000);
+	std::cout << "Finished generating\n";
+	std::cout << vec_to_string<>(primes);
+*/
     return 0;
 }
