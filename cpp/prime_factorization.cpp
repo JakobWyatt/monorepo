@@ -112,7 +112,7 @@ template<typename T> auto find_prime_factors(T to_factorize, std::vector<T>& pri
 
 int main()
 {
-	
+	/*
 	const std::uint64_t max_num_to_factorize = 1000000;
 	std::cout << "Finding prime factors of all numbers up to " << max_num_to_factorize << ".\n";
 
@@ -134,11 +134,12 @@ int main()
 		auto prime_factors = find_prime_factors<std::uint64_t>(i, primes);
 		s += "The prime factors of " + std::to_string(i) + " are " + vec_to_string(prime_factors) + "\n";
 	}
-	std::cout << s;
- /*
-	auto primes = generate_primes(100000000);
+	std::cout << s; */
+ 
+	auto primes = generate_primes(1000000000);
 	std::cout << "Finished generating\n";
+	std::cout << "Number of primes: " << primes.size() << std::endl;
 	std::cout << vec_to_string<>(primes);
-*/
+
     return 0;
 }
