@@ -21,9 +21,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt update && sudo apt install -y racket && sudo apt install -y vim"
-	// RUN AFTER REBUILD
-	// sdk install kotlin
+	//"postCreateCommand": "",
 
 	// Configure tool-specific properties.
 	// "customizations": {},

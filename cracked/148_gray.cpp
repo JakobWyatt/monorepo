@@ -48,7 +48,7 @@ std::deque<uint64_t> GenerateGrayCode(int n)
     }
     uint64_t halfSz = 1 << (n - 1);
     auto last = GenerateGrayCode(n - 1);
-    RotateQueueRight(last, halfSz / 2 + 1);
+    //RotateQueueRight(last, halfSz / 2 + 1);
     for (int64_t i = halfSz - 1; i >= 0; --i)
     {
         last.push_back(last.at(i) + halfSz);
@@ -89,7 +89,7 @@ void ValidateGrayCode(std::deque<uint64_t> in, int n)
 
 int main()
 {
-    constexpr int n = 20;
+    constexpr int n = 10;
     auto code = GenerateGrayCode(n);
     ValidateGrayCode(code, n);
     for (int c : code)
