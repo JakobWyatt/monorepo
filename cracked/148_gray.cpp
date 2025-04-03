@@ -17,6 +17,8 @@
 /// 00 01 10 11
 // 000 001 010 011 100 101 110 111
 
+#include <algorithm>
+#include <print>
 #include <bitset>
 #include <iostream>
 #include <deque>
