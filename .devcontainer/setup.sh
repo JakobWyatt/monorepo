@@ -12,5 +12,5 @@ wget https://github.com/Kitware/CMake/releases/download/v4.0.0/cmake-4.0.0-linux
 git clone https://github.com/llvm/llvm-project.git
 cd llvm-project
 git checkout llvmorg-20.1.1
-~/cmake-4.0.0-linux-x86_64/bin/cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_RUNTIMES="libcxxabi;libcxx;libunwind"
+~/cmake-4.0.0-linux-x86_64/bin/cmake -S llvm -B build -G Ninja -DLLVM_PARALLEL_LINK_JOBS=1 -DLLVM_PARALLEL_COMPILE_JOBS=1 -DLLVM_PARALLEL_TABLEGEN_JOBS=1 -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_ENABLE_RUNTIMES="libcxxabi;libcxx;libunwind"
 ~/cmake-4.0.0-linux-x86_64/bin/cmake --build build

@@ -18,25 +18,10 @@
 // 000 001 010 011 100 101 110 111
 
 #include <algorithm>
-#include <print>
-#include <bitset>
-#include <iostream>
 #include <deque>
-#include <bit>
-
-template<typename T>
-void RotateQueueRight(std::deque<T>& in, size_t rot)
-{
-    if (in.empty())
-    {
-        return;
-    }
-    for (size_t i = 0; i != rot; ++i)
-    {
-        in.emplace_back(in.front());
-        in.pop_front();
-    }
-}
+#include <iostream>
+#include <numeric>
+#include <print>
 
 std::deque<uint64_t> GenerateGrayCode(int n)
 {
@@ -50,7 +35,6 @@ std::deque<uint64_t> GenerateGrayCode(int n)
     }
     uint64_t halfSz = 1 << (n - 1);
     auto last = GenerateGrayCode(n - 1);
-    //RotateQueueRight(last, halfSz / 2 + 1);
     for (int64_t i = halfSz - 1; i >= 0; --i)
     {
         last.push_back(last.at(i) + halfSz);
@@ -63,7 +47,7 @@ void ValidateGrayCode(std::deque<uint64_t> in, int n)
 {
     if (in.size() != 1 << n)
     {
-        std::cout << "FAIL (element count) has: " << in.size() << " needs: " << (1 << n) << "\n";
+        std::println("FAIL (element count) has: {} needs: {}", in.size(), 1 << n);
     }
     // validate that we differ by one
     for (size_t i = 0; i != in.size(); ++i)
@@ -72,31 +56,39 @@ void ValidateGrayCode(std::deque<uint64_t> in, int n)
         uint64_t next = in.at((i + 1) % in.size());
         if (std::popcount(cur ^ next) != 1)
         {
-            std::cout << "FAIL (not off by one) " << cur << " " << next << "\n";
+            std::println("FAIL (not off by one) {} {}", cur, next);
         }
     }
     // validate that we cover every value
-    std::sort(in.begin(), in.end());
+    std::ranges::sort(in);
     uint64_t val = 0;
     for (auto c : in)
     {
         if (c != val)
         {
-            std::cout << "FAIL (missed value) " << c << "\n";
+            std::println("FAIL (missed value) {}", c);
         }
         ++val;
     }
-    std::cout << "Validated " << in.size() << " elements.\n";
+    std::println("Validated {} elements.", in.size());
 }
 
 int main()
 {
-    constexpr int n = 10;
+    constexpr int MAX_INPUT_SZ = 10;
+    int n = 0;
+    std::println("Input gray code size in bits: ");
+    std::cin >> n;
+    if (n < 1 || n > MAX_INPUT_SZ)
+    {
+        std::println("Input must be between 1 and {}", MAX_INPUT_SZ);
+        return 1;
+    }
     auto code = GenerateGrayCode(n);
     ValidateGrayCode(code, n);
-    for (int c : code)
+    for (uint64_t c : code)
     {
-        std::cout << std::bitset<n>(c) << " ";
+        std::print("{:010b} ", c);
     }
-    std::cout << std::endl;
+    std::print("\n");
 }
