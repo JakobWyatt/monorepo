@@ -1,2 +1,7 @@
 Windows: Docker in WSL (devcontainer)
-MacOS: Docker in Containerization (devcontainer)?
+MacOS 26+: Containerization (devcontainer)?
+MacOS Legacy: Podman (devcontainer)
+
+~/.wslconfig
+[wsl2]
+memory=12GB
