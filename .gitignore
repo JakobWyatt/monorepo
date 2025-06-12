@@ -8,3 +8,5 @@ target/
 .ipynb_checkpoints/
 *.exe
 *.obj
+.vs/
+x64/
