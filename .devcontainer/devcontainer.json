@@ -1,5 +1,4 @@
 {
   "name": "monorepo",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "onCreateCommand": "docker pull silkeh/clang:latest"
+  "image": "mcr.microsoft.com/devcontainers/universal:2"
 }
