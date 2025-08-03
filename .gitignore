@@ -10,3 +10,5 @@ target/
 *.obj
 .vs/
 x64/
+secret-file.txt
+
