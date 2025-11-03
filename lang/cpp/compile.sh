@@ -1,1 +1,1 @@
-clang++-20 -Wall -Wextra -std=c++26 -stdlib=libc++ -lc++abi -O2 $1
+clang++-20 -Weverything -Wno-c++98-compat -Wno-missing-prototypes -std=c++26 -stdlib=libc++ -lc++abi -O3 -static $1

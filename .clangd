@@ -1,0 +1,13 @@
+CompileFlags:
+  Add: [-std=c++26, -stdlib=libc++]
+  Compiler: clang++-20
+Diagnostics:
+  ClangTidy:
+    Add:
+      [
+        bugprone-*,
+        cppcoreguidelines-*,
+        modernize-*,
+        performance-*,
+        readability-*,
+      ]
