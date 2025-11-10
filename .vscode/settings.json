@@ -1,0 +1,4 @@
+{
+    "clangd.path": "/usr/bin/clangd-20",
+    "editor.formatOnSave": true,
+}
