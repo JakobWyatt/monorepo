@@ -23,6 +23,10 @@ class VulkanAppConan(ConanFile):
         deps.set_property("vulkan-loader", "cmake_target_name", "Vulkan::Vulkan")
         deps.generate()
 
+        tc = CMakeToolchain(self)
+        tc.user_presets_path = False
+        tc.generate()
+
     def build(self):
         cmake = CMake(self)
         cmake.configure()
