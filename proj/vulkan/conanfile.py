@@ -16,6 +16,7 @@ class VulkanAppConan(ConanFile):
 
     def build_requirements(self):
         self.tool_requires("cmake/4.1.2")
+        self.tool_requires("ninja/1.13.1")
 
     def generate(self):
         deps = CMakeDeps(self)
