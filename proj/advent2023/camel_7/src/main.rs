@@ -28,7 +28,7 @@ fn parse_input(path: &str) -> Option<Hands> {
     std::fs::read_to_string(path).ok()?
     .lines().map(|line| {
         let (hand_tok, bid_tok) = line.split_once(' ')?;
-        let hand = hand_tok.chars().map(|c| to_index(c))
+        let hand = hand_tok.chars().map(to_index)
             .collect::<Vec<_>>().try_into().ok()?;
         let bid = bid_tok.parse().ok()?;
         Some((hand, bid))
