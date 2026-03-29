@@ -9,11 +9,7 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(metal-cpp CONFIG REQUIRED)
 
 file(GLOB_RECURSE SOURCES "src/*.cc")
-add_executable(metal ${SOURCES} src/metal.mm)
-
-set_source_files_properties(src/metal.mm
-    PROPERTIES COMPILE_FLAGS "-x objective-c++"
-)
+add_executable(metal ${SOURCES})
 
 target_link_libraries(metal PRIVATE
 	glfw
