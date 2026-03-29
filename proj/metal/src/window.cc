@@ -1,48 +1,43 @@
 #include "window.h"
 
-GLFWContext::~GLFWContext()
-{
-    if (mOwning) {
-        glfwTerminate();
-    }
-}
-
-std::optional<GLFWContext> GLFWContext::Create()
-{
-    glfwSetErrorCallback(OnError);
-    if (!glfwInit()) {
-        return std::nullopt;
-    }
-    return GLFWContext();
-}
-
-void GLFWContext::OnError(int error, char const* description)
+void Window::OnError(int error, char const* description)
 {
     std::println("GLFW Error: ({}) {}", error, description);
 }
 
-GLFWContext::GLFWContext(GLFWContext&& other) noexcept
-    : mOwning(std::exchange(other.mOwning, false))
+std::unique_ptr<Window> Window::Create()
 {
-}
-
-GLFWContext& GLFWContext::operator=(GLFWContext&& other) noexcept
-{
-    if (this != &other) {
-        if (mOwning) {
-            glfwTerminate();
+    if (!sGlfwInitialised) {
+        glfwSetErrorCallback(OnError);
+        if (!glfwInit()) {
+            return nullptr;
         }
-        mOwning = std::exchange(other.mOwning, false);
+        sGlfwInitialised = true;
     }
-    return *this;
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    auto* glfwWindow = glfwCreateWindow(WIDTH, HEIGHT, TITLE.c_str(), nullptr, nullptr);
+    if (!glfwWindow) {
+        return nullptr;
+    }
+    return std::make_unique<Window>(glfwWindow);
 }
 
-std::optional<Window> Window::Create(GLFWContext const&)
+Window::Window(GLFWwindow* window)
 {
-    Window window;
-    window.mWindow.reset(glfwCreateWindow(WIDTH, HEIGHT, TITLE.c_str(), nullptr, nullptr));
-    if (!window.mWindow) {
-        return std::nullopt;
+    mWindow.reset(window);
+}
+
+Window::~Window()
+{
+    if (sGlfwInitialised) {
+        glfwTerminate();
+        sGlfwInitialised = false;
     }
-    return window;
+}
+
+void Window::Run()
+{
+    while (!glfwWindowShouldClose(mWindow.get())) {
+        glfwPollEvents();
+    }
 }
