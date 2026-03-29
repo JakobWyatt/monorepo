@@ -1,9 +1,10 @@
 #include "window.h"
 
+#include "shim.h"
+
 void Window::OnError(int error, char const* description)
 {
     std::println("GLFW Error: ({}) {}", error, description);
-    std::abort();
 }
 
 std::unique_ptr<Window> Window::Create()
@@ -28,7 +29,12 @@ std::unique_ptr<Window> Window::Create()
 Window::Window(GLFWwindow* window)
 {
     mWindow.reset(window);
-    mDevice = TransferPtr(MTL::CreateSystemDefaultDevice());
+    mDevice = NS::TransferPtr(MTL::CreateSystemDefaultDevice());
+    mLayer = NS::TransferPtr(CA::MetalLayer::layer());
+    mLayer->setDevice(mDevice.get());
+    mLayer->setPixelFormat(MTL::PixelFormatBGRA8Unorm);
+    mMetalWindow = glfwGetCocoaWindow(mWindow.get());
+    ConfigureMetalWindow(mMetalWindow, mLayer.get());
 }
 
 Window::~Window()
