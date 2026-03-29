@@ -3,6 +3,7 @@
 void Window::OnError(int error, char const* description)
 {
     std::println("GLFW Error: ({}) {}", error, description);
+    std::abort();
 }
 
 std::unique_ptr<Window> Window::Create()
@@ -17,6 +18,8 @@ std::unique_ptr<Window> Window::Create()
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     auto* glfwWindow = glfwCreateWindow(WIDTH, HEIGHT, TITLE.c_str(), nullptr, nullptr);
     if (!glfwWindow) {
+        glfwTerminate();
+        sGlfwInitialised = false;
         return nullptr;
     }
     return std::make_unique<Window>(glfwWindow);
@@ -25,10 +28,12 @@ std::unique_ptr<Window> Window::Create()
 Window::Window(GLFWwindow* window)
 {
     mWindow.reset(window);
+    mDevice = TransferPtr(MTL::CreateSystemDefaultDevice());
 }
 
 Window::~Window()
 {
+    mWindow.reset();
     if (sGlfwInitialised) {
         glfwTerminate();
         sGlfwInitialised = false;
